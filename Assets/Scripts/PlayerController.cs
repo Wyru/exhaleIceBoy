@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
 
     AudioSource audioSource;
     public AudioSource evaporatingAudioSource;
+    public bool victory;
 
     [HideInInspector]
     public FreezerController myTrueFreezer;
@@ -461,6 +462,12 @@ public class PlayerController : MonoBehaviour
         {
             audioSource.PlayOneShot(deathEffect);
             dead = true;
+        }
+
+        if (other.CompareTag("Exit"))
+        {
+            victory = true;
+            hasControll = false;
         }
     }
 

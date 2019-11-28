@@ -8,6 +8,7 @@ TagManager:
   - Freezer
   - Death
   - HeatMap
+  - Exit
   layers:
   - Default
   - TransparentFX

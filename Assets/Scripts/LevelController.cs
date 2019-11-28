@@ -2,6 +2,8 @@
 using DG.Tweening;
 using Cinemachine;
 
+using UnityEngine.SceneManagement;
+
 public class LevelController : MonoBehaviour
 {
 
@@ -11,6 +13,12 @@ public class LevelController : MonoBehaviour
     public PlayerController player;
     public GameObject playerPrefb;
     public CinemachineVirtualCamera virtualCamera;
+
+    public GameObject victoryMessage;
+    public AudioSource bgm;
+    public AudioSource victoryAudioSource;
+
+    public bool gameEnded;
     static LevelController instance;
 
     // Start is called before the first frame update
@@ -27,6 +35,19 @@ public class LevelController : MonoBehaviour
         {
             RestartLevel();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Game");
+        }
+
+        if (player.victory && !gameEnded)
+        {
+            bgm.Stop();
+            victoryAudioSource.Play();
+            victoryMessage.SetActive(true);
+            gameEnded = true;
+        }
     }
 
     public static void RestartLevel()
@@ -40,6 +61,7 @@ public class LevelController : MonoBehaviour
         {
             instance.player.transform.position = instance.LevelStartPoint.position;
             instance.player.life = instance.player.maxLife;
+            instance.player.thermalVisionUses = 1;
         }
 
         instance.player.dead = false;
