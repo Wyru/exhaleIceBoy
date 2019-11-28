@@ -1,0 +1,426 @@
+fileFormatVersion: 2
+guid: 2ee052b3829571f49a4c1c3a02af0e3b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -394261176660690891
+    second: NewGroundTiles2_0
+  - first:
+      213: -3469514403624879851
+    second: NewGroundTiles2_1
+  - first:
+      213: 5685544354777459308
+    second: NewGroundTiles2_2
+  - first:
+      213: -9027903119750780578
+    second: NewGroundTiles2_3
+  - first:
+      213: 8048678430474082939
+    second: NewGroundTiles2_4
+  - first:
+      213: 8126682679609241450
+    second: NewGroundTiles2_5
+  - first:
+      213: 3530049407111998345
+    second: NewGroundTiles2_6
+  - first:
+      213: 7605226651432886210
+    second: NewGroundTiles2_7
+  - first:
+      213: -941542749084213202
+    second: NewGroundTiles2_8
+  - first:
+      213: -597148051679411649
+    second: NewGroundTiles2_9
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: NewGroundTiles2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -13, y: 4}
+        - {x: -15, y: -16}
+        - {x: 13, y: -16}
+        - {x: 13, y: 4}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cd5e34c6fe2e6d448fdf274beda2b4f
+      internalID: -394261176660690891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -9, y: 4}
+        - {x: -14, y: 2}
+        - {x: -14, y: -16}
+        - {x: 13, y: -16}
+        - {x: 12, y: -7}
+        - {x: 12, y: -1}
+        - {x: 11, y: 4}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96daa32ac3d9392469645644c1a10634
+      internalID: -3469514403624879851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -8, y: 8}
+        - {x: -13, y: 3}
+        - {x: -13, y: -16}
+        - {x: 14, y: -16}
+        - {x: 13, y: 7}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c724afe48ad333048ab0c22b1edeb022
+      internalID: 5685544354777459308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -8, y: 7}
+        - {x: -14, y: 3}
+        - {x: -12, y: -16}
+        - {x: 13, y: -16}
+        - {x: 13, y: 2}
+        - {x: 8, y: 7}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27bc6113b1766d94f8c0b7cf20e43ea8
+      internalID: -9027903119750780578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_4
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 144
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -6, y: 3}
+        - {x: -13, y: 2}
+        - {x: -13, y: -11}
+        - {x: -9, y: -15}
+        - {x: 7, y: -12}
+        - {x: 12, y: -6}
+        - {x: 12, y: 3}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b70bcca8b593d7a45be183a237168822
+      internalID: 8048678430474082939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -15, y: 16}
+        - {x: -15, y: -16}
+        - {x: 15, y: -16}
+        - {x: 13, y: -15}
+        - {x: 12, y: -1}
+        - {x: 13, y: 16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 843f449fb06a62947b94b915bfa4b3de
+      internalID: 8126682679609241450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_6
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 11, y: 4}
+        - {x: -11, y: 4}
+        - {x: -15, y: 0}
+        - {x: -14, y: -10}
+        - {x: -10, y: -14}
+        - {x: 8, y: -14}
+        - {x: 11, y: -10}
+        - {x: 12, y: -3}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38a54bb91d3f39a4e9c23c702fe95e21
+      internalID: 3530049407111998345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -9, y: 5}
+        - {x: -14, y: -2}
+        - {x: -12, y: -10}
+        - {x: -5, y: -14}
+        - {x: 11, y: -13}
+        - {x: 10, y: 5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7142e9c8271ce2b4694fbe66334e0256
+      internalID: 7605226651432886210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_8
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -12, y: 6}
+        - {x: -13, y: -14}
+        - {x: 13, y: -15}
+        - {x: 13, y: 1}
+        - {x: 11, y: 6}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c4bf1831ccc653459862d5177923566
+      internalID: -941542749084213202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewGroundTiles2_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -15, y: 16}
+        - {x: -12, y: -14}
+        - {x: 7, y: -14}
+        - {x: 12, y: -8}
+        - {x: 13, y: 16}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c84d857d7685a4439763fb7ea33cd97
+      internalID: -597148051679411649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
