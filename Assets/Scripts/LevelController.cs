@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-
     public Transform LevelStartPoint;
     public Transform LastCheckpoint;
     public FreezerController LastCheckpointFreezer;

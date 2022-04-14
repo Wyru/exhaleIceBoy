@@ -4915,8 +4915,57 @@ MonoBehaviour:
   life: 100
   thermalVisionUses: 1
   thermalSensorDuration: 1
-  touchWallTime: 0.7
-  touchWallTimer: 0
+  grapWallTime: 1
+  AccelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  accelerationTime: 0.3
+  desaccelerationTime: 0.7
+  DesaccelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   scaleWithLife:
     serializedVersion: 2
     m_Curve:
@@ -4966,6 +5015,7 @@ MonoBehaviour:
   hasControll: 0
   dead: 0
   usingThermalSensor: 0
+  victory: 0
   onTouchWall: 0
   grapingWall: 0
   canGrapWall: 1

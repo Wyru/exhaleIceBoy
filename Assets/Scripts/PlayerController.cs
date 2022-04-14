@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Tilemaps;
+using UnityEngine.InputSystem;
+
 
 public class PlayerController : MonoBehaviour
 {
 
     [Header("Settings")]
+    [Range(0f, 10f)]
     public float speed;
     public float airModifier;
     public float jumpForce;
@@ -20,15 +23,16 @@ public class PlayerController : MonoBehaviour
     public float life;
 
     public int thermalVisionUses = 1;
-
     public float thermalSensorDuration = 1f;
+    public float grapWallTime;
+    Wyru.Timer grapWallTimer;
+    public AnimationCurve AccelerationCurve;
 
-
-    public float touchWallTime;
-
-    public float touchWallTimer;
-
-
+    [Range(0, 1)] public float accelerationTime;
+    [Range(0, 1)] public float desaccelerationTime;
+    Wyru.Timer accelerationTimer;
+    public AnimationCurve DesaccelerationCurve;
+    Wyru.Timer desaccelerationTimer;
 
     public AnimationCurve scaleWithLife;
 
@@ -53,52 +57,39 @@ public class PlayerController : MonoBehaviour
 
     [Header("Controll Variables")]
     public bool onGround;
-
     public bool jumped;
     public bool doubleJumpep;
-
     public bool freezing;
-
     public bool hasControll;
-
     public bool dead;
-
     bool canFreeze;
-
     public bool usingThermalSensor;
-
-
+    public bool victory;
     public bool onTouchWall;
     public bool grapingWall;
     public bool canGrapWall = true;
-
+    float inputHorizontalMovement;
+    float horizontalMovement;
 
 
 
 
     [Header("References")]
+    public Controlls controlls;
     public GroundChecker groundChecker;
-
     public Tilemap heatTilemap;
-
     public ParticleSystem heatDamageParticles;
-
     public Transform thermalSensorMask;
-
     AudioSource audioSource;
     public AudioSource evaporatingAudioSource;
-    public bool victory;
+
 
     [HideInInspector]
     public FreezerController myTrueFreezer;
-
     Rigidbody2D rb;
-
     Animator animator;
-
     CircleCollider2D cc2d;
     SpriteRenderer spriteRenderer;
-
     FreezerController freezer;
 
 
@@ -113,10 +104,35 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         cc2d = GetComponent<CircleCollider2D>();
 
+        grapWallTimer = gameObject.AddComponent<Wyru.Timer>();
+        grapWallTimer.SetTimer(grapWallTime);
+
+        accelerationTimer = gameObject.AddComponent<Wyru.Timer>();
+        accelerationTimer.SetTimer(accelerationTime);
+
+        desaccelerationTimer = gameObject.AddComponent<Wyru.Timer>();
+        desaccelerationTimer.SetTimer(desaccelerationTime);
+
         canFreeze = true;
     }
 
 
+    private void OnEnable()
+    {
+        controlls = new Controlls();
+
+        controlls.Enable();
+
+        controlls.Player.Horizontal.performed += ctx =>
+        {
+            inputHorizontalMovement = ctx.ReadValue<float>();
+        };
+
+        controlls.Player.Jump.performed += Jump;
+
+        controlls.Player.ThermalSensor.performed += ctx => { ThermalSensor(); };
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -126,14 +142,23 @@ public class PlayerController : MonoBehaviour
             try
             {
                 heatTilemap = (GameObject.FindGameObjectsWithTag("HeatMap")[0]).GetComponent<Tilemap>();
-
             }
-            catch (System.Exception)
-            {
-
-            }
+            catch (System.Exception) { }
         }
 
+        UpdateGravity();
+
+        if (!hasControll || dead)
+            return;
+
+        UpdateMovement();
+        UpdateGrapingWall();
+        UpdateThermalDamage();
+        UpdateSize();
+    }
+
+    void UpdateGravity()
+    {
         if (rb.velocity.y < 0)
         {
             rb.gravityScale = fallGravityScale;
@@ -146,11 +171,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = 1;
         }
+    }
 
 
-        if (!hasControll || dead)
-            return;
-
+    void UpdateMovement()
+    {
         if (!onGround && groundChecker.IsGrounded())
         {
             jumped = false;
@@ -163,62 +188,12 @@ public class PlayerController : MonoBehaviour
             onGround = groundChecker.IsGrounded();
         }
 
-        float horizontalMovement = Input.GetAxis("Horizontal");
-
-        if (!onGround && canGrapWall)
+        if (Mathf.Abs(inputHorizontalMovement) > 0)
         {
-            if (Input.GetButton("Horizontal") && rb.velocity.y < 0)
-            {
-
-                RaycastHit2D[] hits = new RaycastHit2D[1];
-                cc2d.Raycast(new Vector2((horizontalMovement > 0 ? 1 : -1), 0), hits, (cc2d.radius + 0.05f) * transform.localScale.x, groundChecker.whatIsGround);
-
-                if (hits[0])
-                {
-                    Debug.Log(hits[0].collider.name);
-                    if (!onTouchWall && !grapingWall)
-                    {
-                        Debug.Log("On Touch Wall");
-                        jumped = false;
-                        doubleJumpep = false;
-                        onTouchWall = true;
-                        touchWallTimer = 0;
-                        grapingWall = true;
-                    }
-                    else
-                    {
-                        onTouchWall = false;
-                        if (grapingWall)
-                        {
-                            Debug.Log("Graping Wall");
-
-                            if (touchWallTimer < touchWallTime)
-                            {
-                                rb.velocity = new Vector2(0, -0.01f);
-                            }
-                            else
-                            {
-
-                                grapingWall = false;
-                                canGrapWall = false;
-                            }
-
-                            touchWallTimer += Time.deltaTime;
-
-                        }
-                    }
-                }
-
-            }
-        }
-        else
-        {
-            grapingWall = false;
-            onTouchWall = false;
-        }
-
-        if (Input.GetButton("Horizontal"))
-        {
+            desaccelerationTimer.StopTimer();
+            accelerationTimer.StartTimer(false);
+            horizontalMovement = AccelerationCurve.Evaluate(accelerationTimer.GetProgress());
+            horizontalMovement *= inputHorizontalMovement > 0 ? 1 : -1;
             spriteRenderer.flipX = horizontalMovement > 0;
 
             if (onGround)
@@ -233,78 +208,115 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = (new Vector2(Mathf.Clamp(rb.velocity.x + (airModifier * horizontalMovement), -speed, speed), rb.velocity.y));
                 }
             }
-
         }
         else
         {
-            animator.SetBool("is Walking", false);
-            if (Mathf.Abs(rb.velocity.x) > 0.1)
+            accelerationTimer.StopTimer();
+            if (!Mathf.Approximately(rb.velocity.x, 0))
             {
+                desaccelerationTimer.StartTimer(false);
+                animator.SetBool("is Walking", false);
                 animator.SetBool("slide", true);
             }
             else
             {
+                desaccelerationTimer.StopTimer();
                 animator.SetBool("slide", false);
             }
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") > 0)
+    void Jump(InputAction.CallbackContext context)
+    {
+        if (freezer && !freezing && canFreeze)
         {
-            if (freezer && !freezing && canFreeze)
-            {
-                canFreeze = false;
-                myTrueFreezer = freezer;
-                LevelController.SetCheckpoint(myTrueFreezer);
-                freezing = true;
-                hasControll = false;
-                freezer.Open();
+            canFreeze = false;
+            myTrueFreezer = freezer;
+            LevelController.SetCheckpoint(myTrueFreezer);
+            freezing = true;
+            hasControll = false;
+            freezer.Open();
 
-                transform.DOMoveY(transform.position.y + 0.7f, .2f)
-                .SetEase(Ease.OutQuint)
-                .OnComplete(() =>
+            transform.DOMoveY(transform.position.y + 0.7f, .2f)
+            .SetEase(Ease.OutQuint)
+            .OnComplete(() =>
+            {
+                audioSource.PlayOneShot(jumpEffect);
+                spriteRenderer.enabled = false;
+                StartCoroutine("onFreezer");
+            });
+        }
+        else if (onGround && !jumped)
+        {
+            jumped = true;
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            audioSource.PlayOneShot(jumpEffect);
+        }
+        else if (jumped && (canDoubleJump && !doubleJumpep))
+        {
+            audioSource.PlayOneShot(jumpEffect);
+            doubleJumpep = true;
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+        else if (grapingWall && !jumped)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.AddForce(Vector2.up * jumpForce + Vector2.right * jumpForce * (inputHorizontalMovement > 0 ? -1 : 1), ForceMode2D.Impulse);
+            audioSource.PlayOneShot(jumpEffect);
+            grapingWall = false;
+            canGrapWall = true;
+        }
+    }
+
+
+    void UpdateGrapingWall()
+    {
+        if (controlls.Player.Grap.ReadValue<bool>())
+        {
+            if (!onGround && canGrapWall)
+            {
+
+                RaycastHit2D[] hits = new RaycastHit2D[1];
+                cc2d.Raycast(new Vector2(inputHorizontalMovement, 0), hits, (cc2d.radius + 0.1f) * transform.localScale.x, groundChecker.whatIsGround);
+                Debug.Log(hits);
+
+                if (hits[0])
                 {
-                    audioSource.PlayOneShot(jumpEffect);
-                    spriteRenderer.enabled = false;
-                    StartCoroutine("onFreezer");
-                });
-            }
-            else if (onGround && !jumped)
-            {
-                jumped = true;
-
-
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                audioSource.PlayOneShot(jumpEffect);
-            }
-            else if (jumped && (canDoubleJump && !doubleJumpep))
-            {
-                audioSource.PlayOneShot(jumpEffect);
-                doubleJumpep = true;
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            }
-            else if (grapingWall && !jumped)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-                rb.AddForce(Vector2.up * jumpForce + Vector2.right * jumpForce * (horizontalMovement > 0 ? -1 : 1), ForceMode2D.Impulse);
-                audioSource.PlayOneShot(jumpEffect);
-                Debug.Log(rb.velocity);
-                grapingWall = false;
-                canGrapWall = true;
+                    if (!grapingWall && !onTouchWall)
+                    {
+                        jumped = false;
+                        doubleJumpep = false;
+                        onTouchWall = true;
+                        grapWallTimer.StartTimer();
+                        grapingWall = true;
+                    }
+                }
             }
         }
 
+        onTouchWall = false;
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (grapingWall)
         {
-            ThermalSensor();
+            if (grapWallTimer.GetProgress() < 1)
+            {
+                rb.velocity = new Vector2(0, -0.01f);
+            }
+            else
+            {
+                grapingWall = false;
+                canGrapWall = false;
+            }
         }
+    }
 
+
+    void UpdateThermalDamage()
+    {
         int temperature = CheckTemperature();
         TakeHeatDamage(temperature);
-
-        UpdateSize();
     }
 
     public void UpdateSize()
@@ -312,8 +324,6 @@ public class PlayerController : MonoBehaviour
         float scale = scaleWithLife.Evaluate(life / maxLife);
         transform.localScale = new Vector3(scale, scale, scale);
     }
-
-
 
     public int CheckTemperature()
     {
@@ -470,6 +480,7 @@ public class PlayerController : MonoBehaviour
             hasControll = false;
         }
     }
+
 
     private void OnTriggerExit2D(Collider2D other)
     {
